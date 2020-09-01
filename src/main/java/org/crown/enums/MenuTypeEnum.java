@@ -60,6 +60,7 @@ public enum MenuTypeEnum implements IEnum {
     @JsonValue
     public int getValue() {
         return this.value;
+
     }
 
 

@@ -53,4 +53,5 @@ public interface ResourceMapper extends BaseMapper<Resource> {
      * @return
      */
     List<ResourcePermDTO> getUserMenuResourcePerms(@Param("uid") Integer uid);
+
 }

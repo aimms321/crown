@@ -3,6 +3,7 @@ package org.crown.common.shiro;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
  * @author Caratacus
  */
 @Service
+@Slf4j
 public class JWTRealm extends AuthorizingRealm {
 
     @Autowired
@@ -52,6 +54,7 @@ public class JWTRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getPrincipal();
+        log.info("Checking if the token is expired");
         // 判断Token是否过期
         ApiAssert.isFalse(ErrorCodeEnum.UNAUTHORIZED, JWTUtils.isExpired(token));
         return new SimpleAuthenticationInfo(token, token, getName());

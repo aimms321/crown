@@ -122,7 +122,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public List<ResourcePermDTO> getPerms(AuthTypeEnum... authTypes) {
-        return query().select(Resource::getMethod, Resource::getMapping).in(ArrayUtils.isNotEmpty(authTypes), Resource::getAuthType, (Object[]) authTypes).entitys(e -> e.convert(ResourcePermDTO.class));
+        return query().select(Resource::getMethod, Resource::getMapping).in(ArrayUtils.isNotEmpty(authTypes), Resource::getAuthType, authTypes).entitys(e -> e.convert(ResourcePermDTO.class));
     }
 
     @Override

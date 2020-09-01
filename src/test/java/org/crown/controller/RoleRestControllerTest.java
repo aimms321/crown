@@ -23,12 +23,17 @@ package org.crown.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.api.R;
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.responses.SuccessResponses;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.Role;
+import org.crown.model.entity.RoleMenu;
+import org.crown.model.entity.UserRole;
 import org.crown.model.parm.RolePARM;
+import org.crown.service.IUserRoleService;
 import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +41,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import javax.sound.midi.Soundbank;
 
 /**
  * <p>
@@ -51,6 +58,8 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     private MockMvc mockMvc;
     private TokenDTO token;
@@ -60,12 +69,19 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
     public void before() {
         mockMvc = getMockMvc(restController);
         token = userService.getToken(userService.getById(1));
+
     }
 
     @Test
     public void menus() throws Exception {
         //修改角色菜单
+
         isOk(mockMvc, put("/roles/1/menus", token.getToken(), Arrays.asList(1, 2, 3)));
+        List<UserRole> list = userRoleService.query().select(UserRole::getUid, UserRole::getRoleId).eq(UserRole::getUid, 1).list();
+
+        if (list != null) {
+            System.out.println(list);
+        }
     }
 
     @Test
@@ -92,6 +108,7 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
                 isNoContent(mockMvc, delete("/roles/" + record.getId(), token.getToken()));
             }
         }
+
 
     }
 
