@@ -1,0 +1,574 @@
+<style>
+	#formBasic .layui-form-item {
+    margin-bottom: 25px;
+    }
+
+    #formBasic label .layui-icon {
+        font-size: 14px;
+        color: #666;
+	}
+	
+	.layui-form-label {
+		padding-top: 0px;
+	} 
+	
+/* 	.layui-form-input {
+		vertical-align: middle;
+		width:400px;
+	} */
+
+ 
+		
+</style>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+	<div class="layui-card">
+		<div class="layui-card-body">
+
+			<form class="layui-form" style="max-width: 800px;margin: 40px auto;">
+				<div class="layui-form-item">
+					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+						<legend>基本信息</legend>
+					</fieldset>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Certificate No:</label>
+					<div class="layui-input-block">
+						<input type="text" name="certificateNumber" placeholder="请输入证书编号" class="layui-input" lay-verType="msg"
+						 lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">TUV NORD Client:</label>
+					<div class="layui-input-block">
+						<input type="text" name="clientName" placeholder="请输入客户名称" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">P/o nr:</label>
+					<div class="layui-input-block">
+						<input type="text" name="orderNumber" placeholder="请输入订单编号" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Manufacturer:</label>
+					<div class="layui-input-block">
+						<input type="text" name="manufacturerName" placeholder="请输入制造厂名称" class="layui-input" lay-verType="msg"
+						 lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Location of the plant:</label>
+					<div class="layui-input-block">
+						<input type="text" name="plantLocation" placeholder="请输入制造厂地址" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Inspection requested by (purchaser):</label>
+					<div class="layui-input-block">
+						<input type="text" name="purchaserName" placeholder="请输入检验委托方名称" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+						<legend>材料规格</legend>
+					</fieldset>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Specification or grade & standard:</label>
+					<div class="layui-input-block">
+						<input type="text" name="specification" placeholder="请输入材料等级及标准" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Manufacturer’s mark:</label>
+					<div class="layui-upload">
+						<button type="button" class="layui-btn" id="test1">上传制造商LOGO</button>
+						<input type="hidden" id="imgUrl" name="img" value="" lay-verify="required" required />
+						<div class="layui-upload-list">
+							<img class="layui-upload-img" width="100px" height="80px" id="demo1" />
+							<p id="demoText"></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">Delivery condition:</label>
+					<div class="layui-input-block">
+						<input type="text" name="deliveryCondition" placeholder="请输入材料交付状态" class="layui-input" lay-verType="msg"
+						 lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Additional testing /examination specified in the order if any:</label>
+					<div class="layui-input-block">
+						<input type="text" name="additionalTest" placeholder="请输入订单中规定的其他检验" value="N/A" class="layui-input" lay-verType="msg"
+						 lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+						<legend>材料规格及数量信息</legend>
+					</fieldset>
+				</div>
+				<div class="layui-card">
+					<div class="layui-card-body layui-text">
+						<div id="toolbar">
+							<div>
+								<button type="button" class="layui-btn layui-btn-sm" data-type="addRow" title="添加一行">
+									<i class="layui-icon layui-icon-add-1"></i> 添加一行
+								</button>
+							</div>
+						</div>
+						<div id="tableRes" class="table-overlay">
+							<table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+							<div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" style="width:760px; ">
+								<div class="layui-table-box">
+									<div class="layui-table-header">
+										<table cellspacing="0" cellpadding="0" border="0" class="layui-table">
+											<thead>
+												<tr>
+													<th data-field="lotNo" data-unresize="true">
+														<div class="layui-table-cell laytable-cell-1-lotNo laytable-cell-numbers" style="text-align: center"><span>Lot
+																No.</span></div>
+													</th>
+													<th data-field="heatNo">
+														<div class="layui-table-cell laytable-cell-1-heatNo" style="text-align: center"><span>Heat No.</span></div>
+													</th>
+													<th data-field="dimension">
+														<div class="layui-table-cell laytable-cell-1-dimension" style="text-align: center"><span>Dimension/mm</span></div>
+													</th>
+													<th data-field="pcs">
+														<div class="layui-table-cell laytable-cell-1-pcs" style="text-align: center"><span>Pcs</span></div>
+													</th>
+													<th data-field="weight">
+														<div class="layui-table-cell laytable-cell-1-weight" style="text-align: center"><span>Weight/kg</span></div>
+													</th>
+													<th data-field="deleteButton">
+														<div class="layui-table-cell laytable-cell-1-deleteButton" style="text-align: center"><span>操作</span></div>
+													</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+									<div class="layui-table-body layui-table-main">
+										<table cellspacing="0" cellpadding="0" border="0" class="layui-table">
+											<tbody>
+												<tr data-index="0" class="">
+													<td data-field="lotNo">
+														<div class="layui-table-cell laytable-cell-1-lotNo laytable-cell-numbers">1</div>
+													</td>
+													<td data-field="heatNo" data-edit="text">
+														<div class="layui-table-cell laytable-cell-1-heatNo"></div>
+													</td>
+													<td data-field="dimension" data-edit="text">
+														<div class="layui-table-cell laytable-cell-1-dimension"></div>
+													</td>
+													<td data-field="pcs" data-edit="text">
+														<div class="layui-table-cell laytable-cell-1-weight"></div>
+													</td>
+													<td data-field="weight" data-edit="text">
+														<div class="layui-table-cell laytable-cell-1-weight"></div>
+													</td>
+													<td data-field="deleteButton" data-content="1564910155054">
+														<div class="layui-table-cell laytable-cell-1-deleteButton"><a class="layui-btn layui-btn-xs layui-btn-danger"
+															 lay-event="del" lay-id="1564910155054"><i class="layui-icon layui-icon-delete"></i>移除</a></div>
+													</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<style>.laytable-cell-1-lotNo{ width: 140px; }.laytable-cell-1-heatNo{ width: 140px; }.laytable-cell-1-dimension{ width: 253px; }.laytable-cell-1-pcs{ width: 60px; }.laytable-cell-1-weight{ width: 100px; }.laytable-cell-1-deleteButton{ width: 80px; }</style>
+							</div>
+						</div>
+						<div id="action" class="text-center">
+							<button type="button" name="btnSave" class="layui-btn" data-type="save"><i class="layui-icon layui-icon-ok-circle"></i>保存</button>
+							<button type="reset" name="btnReset" class="layui-btn layui-btn-primary">取消</button>
+						</div>
+					</div>
+				</div>
+				<!--保存结果输出-->
+				<div class="layui-card">
+					<div class="layui-card-header">保存结果输出</div>
+					<div class="layui-card-body layui-text">
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							<pre id="jsonResult">[
+
+]</pre>
+						</blockquote>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+						<legend>检验信息</legend>
+					</fieldset>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Date(s) of testing and/or inspection:</label>
+					<div class="layui-input-block">
+						<input type="text" name="inspectionDate" placeholder="请输入检验日期" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Number of pages attached:</label>
+					<div class="layui-input-block">
+						<input type="text" name="attachPages" placeholder="请输入附件总页数" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Identification of attachments:</label>
+					<div class="layui-input-block">
+						<input type="text" name="attachmentDesc" placeholder="请输入附件描述" class="layui-input" lay-verType="msg" lay-verify="required"
+						 required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Markings ensuring the traceability:</label>
+					<div class="layui-input-block">
+						<input type="text" name="markings" placeholder="请输入可追踪标志" class="layui-input" value="N/A" lay-verType="msg"
+						 lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Comments or particular mentions:</label>
+					<div class="layui-input-block">
+						<input type="text" name="comment" placeholder="请输入检验意见" class="layui-input" value="The inspection was carried out according to inspection and test plan of the P.O."
+						 lay-verType="msg" lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Inspector name:</label>
+					<div class="layui-input-block">
+						<input type="text" name="inspectorName" placeholder="请输入检验员姓名" class="layui-input" 
+						 lay-verType="msg" lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">Inspector position:</label>
+					<div class="layui-input-block">
+						<input type="text" name="position" placeholder="请输入检验员职位" class="layui-input" value="Inspection Engineer"
+						 lay-verType="msg" lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-filter="formSubmitBas" lay-submit>&emsp;提交&emsp;</button>
+						<button type="reset" class="layui-btn layui-btn-primary">&emsp;重置&emsp;</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<!-- js部分 -->
+<script>
+	//准备视图对象
+	window.viewObj = {
+		tbData: [{
+			deleteButton: new Date().valueOf(),
+			lotNo: '',
+			heatNo: '',
+			dimension: '',
+			pcs: '',
+			weight: ''
+		}],
+		typeData: [{
+				id: 1,
+				name: '分类一'
+			},
+			{
+				id: 2,
+				name: '分类二'
+			},
+			{
+				id: 3,
+				name: '分类三'
+			},
+			{
+				id: 4,
+				name: '分类四'
+			}
+		],
+		renderSelectOptions: function(data, settings) {
+			settings = settings || {};
+			var valueField = settings.valueField || 'value',
+				textField = settings.textField || 'text',
+				selectedValue = settings.selectedValue || "";
+			var html = [];
+			for (var i = 0, item; i < data.length; i++) {
+				item = data[i];
+				html.push('<option value="');
+				html.push(item[valueField]);
+				html.push('"');
+				if (selectedValue && item[valueField] == selectedValue) {
+					html.push(' selected="selected"');
+				}
+				html.push('>');
+				html.push(item[textField]);
+				html.push('</option>');
+			}
+			return html.join('');
+		}
+	};
+
+
+	layui.use(['layer', 'form', 'laydate', 'table', 'upload', 'config'], function() {
+		var $ = layui.jquery;
+		var layer = layui.layer;
+		var form = layui.form;
+		var laydate = layui.laydate;
+		var config = layui.config;
+		var table = layui.table;
+		var upload = layui.upload;
+
+		var uploadInst = upload.render({
+			elem: '#test1' //绑定元素
+				,
+			url: config.serverUrl + '/file/upload' //上传接口
+				,
+			headers: {
+				Authorization: config.getToken()
+			},
+			before: function(obj) {
+				//预读本地文件示例，不支持ie8
+				obj.preview(function(index, file, result) {
+					$('#demo1').attr('src', result); //图片链接（base64）
+				});
+			},
+			done: function(res) {
+				//如果上传失败
+				if (res.code > 200) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				alert("上传成功" + res.url);
+				document.getElementById("imgUrl").value = res.url;
+
+			},
+			error: function() {
+				//演示失败状态，并实现重传
+				var demoText = $('#demoText');
+				demoText.html(
+					'<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span style="color: #FF5722;">	上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>'
+				);
+				demoText.find('.demo-reload').on('click', function() {
+					uploadInst.upload();
+				});
+			}
+		});
+
+
+		form.render('select');
+		form.render('radio');
+
+		// 渲染laydate
+		laydate.render({
+			elem: '#edtDateFormBas',
+			range: true
+		});
+
+		// 监听表单提交
+		/* 		form.on('submit(formSubmitBas)', function(data) {
+					var tbd = table.cache[layTableId];
+					data.field.desc = tbd;
+					// layer.msg(JSON.stringify(data.field));
+					document.getElementById("jsonResult").innerHTML = JSON.stringify(data.field, null, 2); //使用JSON.stringify() 格式化输出JSON字符串
+					return false;
+				}); */
+
+		form.on('submit(formSubmitBas)', function(data) {
+			var tbd = table.cache[layTableId];
+			data.field.desc = tbd;
+			$.ajax({
+				url: "/cert/type32",
+				async: false,
+				type: 'post',
+				dataType: 'JSON',
+				data: JSON.stringify(data.field),
+				contentType: "application/json;charset=UTF-8",
+				headers: {
+					Authorization: config.getToken()
+				},
+				success: function(res) {
+					// if (res.code > 200) {
+					// 	return layer.msg('上传失败');
+					// }
+					//上传成功
+					alert("上传成功");
+				},
+				error: function(e) {
+					alert("上传失败");
+				}
+
+			});
+		});
+
+
+		//以下为table相关代码
+		//数据表格实例化			
+		var tbWidth = $("#tableRes").width();
+		var layTableId = "layTable";
+		var tableIns = table.render({
+			elem: '#dataTable',
+			id: layTableId,
+			data: viewObj.tbData,
+			width: tbWidth,
+			page: false,
+			loading: true,
+			limit: 200,
+			even: false, //不开启隔行背景
+			cols: [
+				[{
+						field: 'lotNo',
+						title: 'LotNo.',
+						edit: 'text'
+					},
+					{
+						field: 'heatNo',
+						title: 'Heat No.',
+						edit: 'text'
+					},
+					{
+						field: 'dimension',
+						title: 'Dimension/mm',
+						edit: 'text'
+					},
+					{
+						field: 'pcs',
+						title: 'Pcs',
+						edit: 'text'
+					},
+					{
+						field: 'weight',
+						title: 'Weight/kg',
+						edit: 'text'
+					},
+					{
+						field: 'deleteButton',
+						title: '操作',
+						templet: function(d) {
+							return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.deleteButton +
+								'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
+						}
+					}
+				]
+			],
+			done: function(res, curr, count) {
+				viewObj.tbData = res.data;
+			}
+		});
+
+		//定义事件集合
+		var active = {
+			addRow: function() { //添加一行
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				var newRow = {
+					deleteButton: new Date().valueOf(),
+					lotNo: '',
+					heatNo: '',
+					dimension: '',
+					pcs: '',
+					weight: ''
+				};
+				oldData.push(newRow);
+				tableIns.reload({
+					data: oldData
+				});
+			},
+			updateRow: function(obj) {
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				for (var i = 0, row; i < oldData.length; i++) {
+					row = oldData[i];
+					if (row.deleteButton == obj.deleteButton) {
+						$.extend(oldData[i], obj);
+						return;
+					}
+				}
+				tableIns.reload({
+					data: oldData
+				});
+			},
+			removeEmptyTableCache: function() {
+				var oldData = table.cache[layTableId];
+				for (var i = 0, row; i < oldData.length; i++) {
+					row = oldData[i];
+					if (!row || !row.deleteButton) {
+						oldData.splice(i, 1); //删除一项
+					}
+					continue;
+				}
+				tableIns.reload({
+					data: oldData
+				});
+			},
+			save: function() {
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				for (var i = 0, row; i < oldData.length; i++) {
+					row = oldData[i];
+					// if (!row.type) {
+					// 	layer.msg("检查每一行，请选择分类！", {
+					// 		icon: 5
+					// 	}); //提示
+					// 	return;
+					// }
+				}
+				document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId], null, 2); //使用JSON.stringify() 格式化输出JSON字符串		
+			}
+		}
+
+		//激活事件
+		var activeByType = function(type, arg) {
+			if (arguments.length === 2) {
+				active[type] ? active[type].call(this, arg) : '';
+			} else {
+				active[type] ? active[type].call(this) : '';
+			}
+		}
+
+		//注册按钮事件
+		$('.layui-btn[data-type]').on('click', function() {
+			var type = $(this).data('type');
+			activeByType(type);
+		});
+
+		//监听select下拉选中事件
+		form.on('select(type)', function(data) {
+			var elem = data.elem; //得到select原始DOM对象
+			$(elem).prev("a[lay-event='type']").trigger("click");
+		});
+		//监听工具条
+		table.on('tool(dataTable)', function(obj) {
+			var data = obj.data,
+				event = obj.event,
+				tr = obj.tr; //获得当前行 tr 的DOM对象;
+			console.log(data);
+			switch (event) {
+				case "del":
+					layer.confirm('真的删除行么？', function(index) {
+						obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+						layer.close(index);
+						activeByType('removeEmptyTableCache');
+					});
+					break;
+			}
+		});
+
+
+
+	});
+</script>
